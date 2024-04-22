@@ -1,0 +1,61 @@
+' Main.bs
+sub init()
+    ' get access to backgroungdPoster and helloWorldLabel from HelloWorld.xml - note that HelloWorld.xml needs to link to Main.bs with a relative path
+    m.backgroundPoster = m.top.findNode("backgroundPoster")
+    m.helloWorldLabel = m.top.findNode("helloWorldLabel")
+
+    ' get diplay size
+    di = CreateObject("roDeviceInfo")
+    DS = di.GetDisplaySize()
+    m.DisplaySize_w = DS["w"]
+    m.DisplaySize_h = DS["h"]
+
+    ' change background image size
+    if m.backgroundPoster <> invalid then
+        m.backgroundPoster.width = m.DisplaySize_w
+        m.backgroundPoster.height = m.DisplaySize_h
+    end if    
+
+    ' use own font
+    font  = CreateObject("roSGNode", "Font")
+    font.uri = "pkg:/fonts/ArialBold.ttf"
+    font.size = 80
+
+    ' set text and position label
+    if m.helloWorldLabel <> invalid then
+        m.helloWorldLabel.text = "Hello World!"
+        m.helloWorldLabel.font = font
+        m.helloWorldLabel.width = m.DisplaySize_w
+        m.helloWorldLabel.height = m.DisplaySize_h
+        m.helloWorldLabel.horizAlign = "center"
+        m.helloWorldLabel.vertAlign = "center"
+    end if
+    
+end sub
+
+' Main-Method
+sub Main()
+    ' Create new Scene
+    screen = createObject("roSGScreen")
+    m.port = createObject("roMessagePort")
+    screen.setMessagePort(m.port)
+
+    ' Load HelloWorld.xml
+    screen.CreateScene("HelloWorld")
+    
+    ' Show Scene
+    screen.show()
+    
+    ' While loop
+    while(true)
+        msg = wait(0, m.port)
+        msgType = type(msg)
+        if (msgType = "roSGScreenEvent")
+            if msg.isScreenClosed() then return
+            if msg.isScreenInitialized() then
+                ' Once screen is initialized, call init()
+                init()
+            end if
+        end if
+    end while
+end sub

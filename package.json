@@ -1,0 +1,17 @@
+{
+  "name": "hello-world-roku",
+  "version": "1.0.0",
+  "description": "Hello World Roku application using BrighterScript",
+  "main": "source/source/Main.bs",
+  "scripts": {
+    "build": "bsc --outdir dist --format cjs --createPackage=false",
+    "package": "bsc --outdir dist --format cjs --create-package",
+    "lint": "bsc --lint",
+    "deploy": "bsc --deploy"
+  },
+  "author": "Madoe21",
+  "license": "MIT",
+  "devDependencies": {
+    "brighterscript": "0.65.27"
+  }
+}

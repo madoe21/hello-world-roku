@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="HelloWorld" extends="Scene">
+  <script type="text/brightscript" uri="../source/Main.bs" />
+  <interface>
+    <field id="helloWorldLabel" type="Node" />
+    <field id="backgroundPoster" type="Node" />
+  </interface>
+
+  <children>
+    <Poster 
+      id="backgroundPoster" 
+      uri="pkg:/images/background.png"
+    />
+    <Label 
+      id="helloWorldLabel" 
+      color="0xFFFFFFFF"
+    />
+  </children>
+</component>
